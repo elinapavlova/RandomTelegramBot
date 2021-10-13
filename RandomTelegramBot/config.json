@@ -1,0 +1,21 @@
+﻿{
+    "App":
+    {
+        "Token" : "Token"
+    },
+    "Commands": 
+    { 
+        "Command" : {
+            "StartCommand": "/start",
+            "TimeCommand": "/time",
+            "RandomNumberCommand": "/random"
+        }
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+        }
+    }
+}

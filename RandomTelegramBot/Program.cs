@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using NLog.Web;
 using Services;
 using Services.Contracts;
 using Telegram.Bot;
@@ -16,15 +16,19 @@ namespace RandomTelegramBot
 
         private static async Task Main()
         {
-            var startup = new Startup();
-            IServiceCollection services = new ServiceCollection();
-            startup.ConfigureServices(services);
-            
-            IServiceProvider serviceProvider = services.BuildServiceProvider();
-            var configureService = serviceProvider.GetService<IConfigureClientService>();
-
+            var pathToLogFile = "path";
+            var logger = NLogBuilder.ConfigureNLog(pathToLogFile).GetCurrentClassLogger();
             try
             {
+                logger.Debug("init main");
+                
+                var startup = new Startup();
+                IServiceCollection services = new ServiceCollection();
+                startup.ConfigureServices(services);
+                
+                IServiceProvider serviceProvider = services.BuildServiceProvider();
+                var configureService = serviceProvider.GetService<IConfigureClientService>();
+            
                 _bot = configureService.CreateBot();
 
                 using var cts = new CancellationTokenSource();
@@ -41,7 +45,12 @@ namespace RandomTelegramBot
             }
             catch(Exception ex)
             {
+                logger.Error(ex, "Stopped program because of exception");
                 Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
             }
         }
     }

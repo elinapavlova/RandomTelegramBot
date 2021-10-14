@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Commands;
 using Commands.Base;
 using Infrastructure.Configurations;
-using Models;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
@@ -22,6 +22,13 @@ public class Handlers
             _commands = new CommandsStruct(commandsConfiguration).CommandList;
         }
         
+        /// <summary>
+        /// Обработка ошибок
+        /// </summary>
+        /// <param name="botClient"></param>
+        /// <param name="exception"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public static Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             var errorMessage = exception switch

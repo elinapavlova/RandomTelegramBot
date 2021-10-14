@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Commands.Base;
-using Commands;
 using Infrastructure.Configurations;
 
-namespace Models
+namespace Commands
 {
     public readonly struct CommandsStruct
     {

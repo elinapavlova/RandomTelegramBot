@@ -1,5 +1,4 @@
-﻿using Infrastructure;
-using Infrastructure.Configurations;
+﻿using Infrastructure.Configurations;
 using Infrastructure.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +31,7 @@ namespace RandomTelegramBot
             services.AddSingleton(commandsConfiguration);
 
             services.AddScoped<IConfigureClientService, ConfigureClientService>();
-
-            // Инициализация списка команд
-            var handlers = new Handlers(commandsConfiguration);
+            services.AddScoped<IHandlersService, HandlersService>();
         }
     }
 }

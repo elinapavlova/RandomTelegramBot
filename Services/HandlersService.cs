@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Commands;
 using Commands.Base;
 using Infrastructure.Configurations;
+using Services.Contracts;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
@@ -13,11 +14,11 @@ using Telegram.Bot.Types.Enums;
 
 namespace Services
 {
-public class Handlers
+public class HandlersService : IHandlersService
     {
         private static List<Command> _commands;
         
-        public Handlers(CommandsConfiguration commandsConfiguration)
+        public HandlersService(CommandsConfiguration commandsConfiguration)
         {
             _commands = new CommandsStruct(commandsConfiguration).CommandList;
         }
@@ -29,7 +30,7 @@ public class Handlers
         /// <param name="exception"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+        public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             var errorMessage = exception switch
             {
@@ -49,13 +50,13 @@ public class Handlers
         /// <param name="botClient"></param>
         /// <param name="update"></param>
         /// <param name="cancellationToken"></param>
-        public static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             var handler = update.Type switch
             {
-                UpdateType.Message       => BotOnMessageReceived(botClient, update.Message),
-                _                        => botClient.SendTextMessageAsync(update.Message.Chat.Id, 
-                                           "Команда не обнаружена", cancellationToken: cancellationToken)
+                UpdateType.Message => BotOnMessageReceived(botClient, update.Message),
+                _                  => botClient.SendTextMessageAsync(update.Message.Chat.Id, "Команда не обнаружена", 
+                                        cancellationToken: cancellationToken)
             };
 
             try
@@ -73,7 +74,7 @@ public class Handlers
         /// </summary>
         /// <param name="botClient"></param>
         /// <param name="message"></param>
-        private static async Task BotOnMessageReceived(ITelegramBotClient botClient, Message message)
+        private async Task BotOnMessageReceived(ITelegramBotClient botClient, Message message)
         {
             // Если сообщение не текст - игнорировать
             if (message.Type != MessageType.Text)

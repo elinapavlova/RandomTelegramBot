@@ -3,14 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.Web;
-using Services;
 using Services.Contracts;
 using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 
 namespace RandomTelegramBot
 {
-    public static class Program
+    public class Program
     {
         private static TelegramBotClient _bot;
 
@@ -28,12 +27,13 @@ namespace RandomTelegramBot
                 
                 IServiceProvider serviceProvider = services.BuildServiceProvider();
                 var configureService = serviceProvider.GetService<IConfigureClientService>();
+                var handlersService = serviceProvider.GetService<IHandlersService>();
             
                 _bot = configureService.CreateBot();
 
                 using var cts = new CancellationTokenSource();
 
-                _bot.StartReceiving(new DefaultUpdateHandler(Handlers.HandleUpdateAsync, Handlers.HandleErrorAsync),
+                _bot.StartReceiving(new DefaultUpdateHandler(handlersService.HandleUpdateAsync, handlersService.HandleErrorAsync),
                     cts.Token);
 
                 var me = await _bot.GetMeAsync(cts.Token);

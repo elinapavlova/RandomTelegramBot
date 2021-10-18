@@ -28,22 +28,18 @@ namespace Commands
         
         private static string ValidateMessage(Message message)
         {
-            var mess = message.Text.Split(' ');
-            int _minValue, _maxValue;
-            
-            if (mess.Length < 3)
+            var text = message.Text.Split(' ');
+
+            if (text.Length < 3)
                 return  "Недостаточно данных";
 
-            var minValue = int.TryParse(mess[1], out _minValue);
-            var maxValue = int.TryParse(mess[2], out _maxValue);
+            int.TryParse(text[1], out var minValue);
+            int.TryParse(text[2], out var maxValue);
             
-            if (!minValue || !maxValue)
-                return "Неверный формат данных"; 
-            
-            if (_minValue > _maxValue)
-                return "Первое число должно быть меньше второго";
-            
-            var value = GetRandomValue(_minValue, _maxValue);
+            if ((text[1] != "0" || text[2] != "0") && (minValue == 0 || maxValue == 0))
+                return "Неверный формат данных";
+
+            var value = GetRandomValue(minValue, maxValue);
             return value.ToString();
         }
     }

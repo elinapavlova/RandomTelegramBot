@@ -21,13 +21,12 @@ namespace RandomTelegramBot
         {
             services.Configure<AppOptions>(Configuration.GetSection(AppOptions.App));
             var appOptions = Configuration.GetSection(AppOptions.App).Get<AppOptions>();
-            var appConfiguration = new AppConfiguration(appOptions.Token);
-            
+
             services.Configure<CommandsOptions>(Configuration.GetSection(CommandsOptions.Commands));
             var commandsOptions = Configuration.GetSection(CommandsOptions.Commands).Get<CommandsOptions>();
             var commandsConfiguration = new CommandsConfiguration(commandsOptions.Command);
             
-            services.AddSingleton(appConfiguration);
+            services.AddSingleton(appOptions);
             services.AddSingleton(commandsConfiguration);
 
             services.AddScoped<IConfigureClientService, ConfigureClientService>();

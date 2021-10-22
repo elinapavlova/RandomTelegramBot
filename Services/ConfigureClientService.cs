@@ -1,4 +1,5 @@
-﻿using Infrastructure.Configurations;
+﻿using Infrastructure.Options;
+using Microsoft.Extensions.Options;
 using Services.Contracts;
 using Telegram.Bot;
 
@@ -12,9 +13,9 @@ namespace Services
         private readonly string _token;
         private static TelegramBotClient _client;
 
-        public ConfigureClientService(AppConfiguration configuration)
+        public ConfigureClientService(IOptions<AppOptions> options)
         {
-            _token = configuration.Token;
+            _token = options.Value.Token;
         }
 
         public TelegramBotClient CreateBot()

@@ -14,7 +14,8 @@ namespace Commands
             {
                 new StartCommand(commands[nameof(StartCommand)], commandsConfiguration),
                 new RandomNumberCommand(commands[nameof(RandomNumberCommand)]),
-                new TimeCommand(commands[nameof(TimeCommand)])
+                new TimeCommand(commands[nameof(TimeCommand)]),
+                new AboutMeCommand(commands[nameof(AboutMeCommand)])
             };
         }
 

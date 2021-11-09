@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Commands;
 using Commands.Base;
 using Infrastructure.Configurations;
+using Infrastructure.Options;
+using Microsoft.Extensions.Options;
 using Services.Contracts;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
@@ -18,9 +20,14 @@ public class HandlersService : IHandlersService
     {
         private static List<Command> _commands;
         
-        public HandlersService(CommandsConfiguration commandsConfiguration)
+        public HandlersService
+        (
+            CommandsConfiguration commandsConfiguration, 
+            IOptions<AppOptions> options,
+            IOptions<SmtpClientOptions> smtpOptions
+        )
         {
-            _commands = new CommandsStruct(commandsConfiguration).CommandList;
+            _commands = new CommandsStruct(commandsConfiguration, options, smtpOptions).CommandList;
         }
         
         /// <summary>
@@ -52,15 +59,15 @@ public class HandlersService : IHandlersService
         /// <param name="cancellationToken"></param>
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            var handler = update.Type switch
-            {
-                UpdateType.Message => BotOnMessageReceived(botClient, update.Message),
-                _                  => botClient.SendTextMessageAsync(update.Message.Chat.Id, "Команда не обнаружена", 
-                                        cancellationToken: cancellationToken)
-            };
-
             try
             {
+                var handler = update.Type switch
+                {
+                    UpdateType.Message => BotOnMessageReceived(botClient, update.Message),
+                    _                  => botClient.SendTextMessageAsync(update.Message.Chat.Id, "Команда не обнаружена", 
+                                                cancellationToken: cancellationToken)
+                };
+                
                 await handler;
             }
             catch (Exception exception)

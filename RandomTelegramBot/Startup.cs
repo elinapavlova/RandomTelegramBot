@@ -25,9 +25,13 @@ namespace RandomTelegramBot
             services.Configure<CommandsOptions>(Configuration.GetSection(CommandsOptions.Commands));
             var commandsOptions = Configuration.GetSection(CommandsOptions.Commands).Get<CommandsOptions>();
             var commandsConfiguration = new CommandsConfiguration(commandsOptions.Command);
+
+            services.Configure<SmtpClientOptions>(Configuration.GetSection(SmtpClientOptions.SmtpClient));
+            var smtpClientOptions = Configuration.GetSection(SmtpClientOptions.SmtpClient).Get<SmtpClientOptions>();
             
             services.AddSingleton(appOptions);
             services.AddSingleton(commandsConfiguration);
+            services.AddSingleton(smtpClientOptions);
 
             services.AddScoped<IConfigureClientService, ConfigureClientService>();
             services.AddScoped<IHandlersService, HandlersService>();

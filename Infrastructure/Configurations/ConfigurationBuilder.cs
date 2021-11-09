@@ -6,7 +6,7 @@ namespace Infrastructure.Configurations
     {
 
         private static readonly IConfigurationRoot Builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
-            .SetBasePath("path")
+            .SetBasePath("{BasePath}")
             .AddJsonFile("config.json", false)
             .Build();
 

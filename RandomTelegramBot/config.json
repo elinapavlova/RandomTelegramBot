@@ -1,14 +1,27 @@
 ﻿{
     "App":
     {
-        "Token" : "Token"
+        "Token" : "{Token}",
+        "BotName" : "@my_random_time_bot"
+    },
+    "SmtpClient" : {
+        "Host" : "smtp.mail.ru",
+        "Port" : 465,
+        "SslProtocol" : "Tls",
+        "EnableSsl" : true,
+        "Credentials" : {
+            "UserName" : "{Email}",
+            "Password" : "{EmailPassword}"
+        }
     },
     "Commands": 
     { 
         "Command" : {
             "StartCommand": "/start",
             "TimeCommand": "/time",
-            "RandomNumberCommand": "/random"
+            "RandomNumberCommand": "/random",
+            "AboutMeCommand" : "/me",
+            "SendMessageToEmailCommand" : "/email"
         }
     },
     "Logging": {

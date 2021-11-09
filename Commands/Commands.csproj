@@ -6,6 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
+      <PackageReference Include="MailKit" Version="2.15.0" />
       <PackageReference Include="Telegram.Bot" Version="16.0.2" />
     </ItemGroup>
     

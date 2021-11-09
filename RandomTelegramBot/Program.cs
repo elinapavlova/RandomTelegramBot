@@ -9,13 +9,13 @@ using Telegram.Bot.Extensions.Polling;
 
 namespace RandomTelegramBot
 {
-    public class Program
+    public static class Program
     {
         private static TelegramBotClient _bot;
 
         private static async Task Main()
         {
-            var pathToLogFile = "path";
+            var pathToLogFile = "{PathToLogFile}";
             var logger = NLogBuilder.ConfigureNLog(pathToLogFile).GetCurrentClassLogger();
             try
             {
@@ -40,7 +40,6 @@ namespace RandomTelegramBot
                 Console.WriteLine($"Start listening for @{me.Username}");
                 
                 Console.ReadLine();
-
                 cts.Cancel();
             }
             catch(Exception ex)
@@ -53,5 +52,6 @@ namespace RandomTelegramBot
                 NLog.LogManager.Shutdown();
             }
         }
+        
     }
 }

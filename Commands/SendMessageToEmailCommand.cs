@@ -81,7 +81,7 @@ namespace Commands
                 
                 await client.DisconnectAsync (true);
                 
-                Console.WriteLine("Sent Message < {0} > from {1} to {2}", text, FromAddress, toAddress);
+                Console.WriteLine("Sent Message < {0} > from {1} to {2}. Date {3}", text, FromAddress, toAddress, DateTime.Now);
             }
             catch (Exception ex)
             {

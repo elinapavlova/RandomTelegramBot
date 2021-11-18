@@ -1,7 +1,7 @@
 ﻿{
     "App":
     {
-        "Token" : "{Token}",
+        "Token" : "{Token}}",
         "BotName" : "@my_random_time_bot"
     },
     "SmtpClient" : {
@@ -10,8 +10,8 @@
         "SslProtocol" : "Tls",
         "EnableSsl" : true,
         "Credentials" : {
-            "UserName" : "{Email}",
-            "Password" : "{EmailPassword}"
+            "UserName" : "{Username}",
+            "Password" : "{Password}"
         }
     },
     "Commands": 
@@ -21,6 +21,7 @@
             "TimeCommand": "/time",
             "RandomNumberCommand": "/random",
             "AboutMeCommand" : "/me",
+            "MyAgeCommand" : "/age",
             "SendMessageToEmailCommand" : "/email"
         }
     },

@@ -23,6 +23,7 @@ namespace Commands
                 new RandomNumberCommand(commands[nameof(RandomNumberCommand)]),
                 new TimeCommand(commands[nameof(TimeCommand)]),
                 new AboutMeCommand(commands[nameof(AboutMeCommand)]),
+                new MyAgeCommand(commands[nameof(MyAgeCommand)]),
                 new SendMessageToEmailCommand(commands[nameof(SendMessageToEmailCommand)], options, smtpOptions)
             };
         }
